@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    /* 页面整体：暖草绿主题的柔和渐变底色，用 text-align 让卡片水平居中 */
+    body {
+        font-family: "Microsoft YaHei", Arial, sans-serif;
+        background: linear-gradient(160deg, #eaf6e2, #f7fcf4 55%, #e6f1fb);
+        color: #2f3b33;
+        text-align: center;
+    }
+
+    /* 题目指定的 .page 样式，只按学号末位要求改了 background-color */
+    .page {
+        display: inline-block;
+        background-color: #E6F8E0;
+        box-shadow: 0 0 30px rgba(80, 58, 35, 0.25);
+        text-align: left;
+        max-width: 720px;
+    }
+
+    /* 并集选择器：统一六级标题的颜色与字间距 */
+    h1, h2, h3, h4, h5, h6 {
+        color: #2f5d43;
+        letter-spacing: 1px;
+    }
+
+    /* 顶部标题区：用行高撑开留白，文字居中 */
+    .head {
+        text-align: center;
+        line-height: 2.6;
+    }
+
+    .head h1 {
+        font-size: 200%;
+        letter-spacing: 3px;
+    }
+
+    /* 五个区域左右留白，避免文字贴着卡片边缘 */
+    .intro, .roster, .links, .notice {
+        padding: 0 34px;
+    }
+
+    /* 活动介绍区 */
+    .intro h2 {
+        text-align: center;
+        font-size: 128%;
+        line-height: 2.1;
+    }
+
+    .intro-text {
+        line-height: 1.9;
+        letter-spacing: 0.5px;
+    }
+
+    /* 那句英文介绍：斜体 + 居中，像书页上的题记 */
+    .en {
+        font-style: italic;
+        font-size: 108%;
+        color: #35734f;
+        text-align: center;
+        line-height: 1.9;
+    }
+
+    /* ID 选择器：只作用于 id="intro" 的段落 p，不会影响 id="intro" 的 h2
+       放大 + 加粗 + 特殊颜色，三重强调重要提示 */
+    p#intro {
+        font-size: 132%;
+        font-weight: bold;
+        color: #b4472a;
+        text-align: center;
+        line-height: 1.9;
+    }
+
+    /* 报名信息表格区 */
+    .roster h3 {
+        text-align: center;
+        font-size: 118%;
+        line-height: 2.2;
+    }
+
+    table {
+        width: 100%;
+        background-color: #f5fcf0;
+        font-size: 92%;
+    }
+
+    th {
+        background-color: #cdeac3;
+        font-weight: bold;
+        text-align: left;
+        line-height: 2.2;
+    }
+
+    td {
+        line-height: 2.0;
+    }
+
+    /* 斑马纹：隔行浅绿，读起来不串行 */
+    table tr:nth-child(even) {
+        background-color: #eefae6;
+    }
+
+    /* 鼠标移入整行高亮 */
+    table tr:hover {
+        background-color: #daf0cb;
+    }
+
+    /* 表格下方的小注：说明“语言等级”这一列怎么用 */
+    .note {
+        font-size: 86%;
+        color: #61776a;
+        line-height: 1.9;
+        letter-spacing: 0.3px;
+    }
+
+    /* 后代选择器：div 里的 table 里的 a
+       只让报名名单中的姓名链接变大加粗，不影响页面其他链接 */
+    div table a {
+        font-weight: bold;
+        font-size: 108%;
+        color: #1f6b45;
+    }
+
+    /* 链接伪类：四种状态颜色依次变化 */
+    a:link {
+        color: #2f7a4f;
+        text-decoration: none;
+    }
+
+    a:visited {
+        color: #6b8f6b;
+        text-decoration: none;
+    }
+
+    a:hover {
+        color: #11975f;
+        text-decoration: underline;
+    }
+
+    a:active {
+        color: #2f4f9e;
+        text-decoration: underline;
+    }
+
+    /* 带类名的链接：偏暖的重点链接、偏冷的次要链接 */
+    a.red:link {
+        color: #c94a30;
+    }
+
+    a.red:active {
+        color: #2f4f9e;
+    }
+
+    a.blue:link {
+        color: #2c6fb5;
+    }
+
+    a.blue:active {
+        color: #8a3a9e;
+    }
+
+    /* 伪元素：段落首字放大，像排版讲究的读本 */
+    p::first-letter {
+        font-size: 170%;
+        font-weight: bold;
+        color: #2f7a4f;
+    }
+
+    /* 伪元素：每个 div 的第一行都加深加粗，底部公告区的首行因此格外醒目 */
+    div::first-line {
+        color: #2f5d43;
+        font-weight: bold;
+    }
+
+    /* 页面链接区：两条链接居中竖排 */
+    .links {
+        text-align: center;
+        line-height: 2.6;
+    }
+
+    /* 底部公告区：字号略小，层次更清楚 */
+    .notice {
+        font-size: 90%;
+        line-height: 1.9;
+        color: #4d6357;
+    }
+
+    /* 分隔线：用背景渐变模拟，不用 border */
+    .divider {
+        height: 1px;
+        background: linear-gradient(to right, rgba(47, 93, 67, 0), rgba(47, 93, 67, 0.55), rgba(47, 93, 67, 0));
+    }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+    <!-- ① 顶部标题区：div 标签内含一个 h1 作为页面主标题 -->
+    <div class="head">
+        <h1>城市书店 · 外语读本交流夜</h1>
+    </div>
+
+    <div class="divider"></div><br>
+
+    <!-- ② 活动介绍区：h2 + 至少两个 p + 一个 p#intro -->
+    <div class="intro">
+        <h2 id="intro">本周主题：用一本书，走进另一种语言</h2>
+
+        <p class="en">Foreign Book Meetup<br>Every reader is a traveler in another language.</p>
+
+        <p class="intro-text">
+            本周六晚七点，城市书店三层的“外文角”会亮起一圈暖灯：英、日、法的读本摊在同一张长桌上，等你在一句陌生的话里，忽然读懂了熟悉的心情。
+        </p>
+
+        <p class="intro-text">
+            现场备有双语对照读本、英汉词卡和一杯热柠檬水。你可以只带耳朵来，安静旁听任何一位领读人的段落；也可以带上自己正在读的原版书，和大家交换一段朗读。本学期读书会正在招募新成员，喜欢慢慢读的人，随时可以坐下来。
+        </p>
+
+        <!-- 这个 p 使用 id="intro"，会被 p#intro 放大加粗变红 -->
+        <p id="intro">
+            重要提示：本场读本按托福必读、雅思必读、GMAT必读、原版入门四种等级分区摆放；席位有限，报名成功后以短信确认为准，请务必留下可联系的手机号。
+        </p>
+    </div>
+
+    <br><div class="divider"></div><br>
+
+    <!-- ③ 活动报名信息表格区：h3 + table（表头 + 4 行数据） -->
+    <div class="roster">
+        <h3>活动报名名单</h3>
+
+        <table>
+            <tr>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>本次读本</th>
+                <th>语言等级</th>
+                <th>报名状态</th>
+            </tr>
+            <tr>
+                <td>01</td>
+                <td><a href="https://example.com/reader/li-ming">李明</a></td>
+                <td>The Old Man and the Sea</td>
+                <td>托福必读</td>
+                <td>已确认席位</td>
+            </tr>
+            <tr>
+                <td>02</td>
+                <td><a href="https://example.com/reader/sofia">Sofia</a></td>
+                <td>Pride and Prejudice</td>
+                <td>雅思必读</td>
+                <td>已确认席位</td>
+            </tr>
+            <tr>
+                <td>03</td>
+                <td>陈可</td>
+                <td>Norwegian Wood（英文版）</td>
+                <td>GMAT必读</td>
+                <td>待确认</td>
+            </tr>
+            <tr>
+                <td>04</td>
+                <td>Oliver</td>
+                <td>Charlotte's Web（双语版）</td>
+                <td>原版入门</td>
+                <td>候补名单</td>
+            </tr>
+        </table>
+
+        <p class="note">
+            语言等级指该读本的阅读难度，分别参考托福、雅思、GMAT 的原题文本长度与词汇量；标为“原版入门”的读本配有中英对照页，第一次读原版也不会太吃力。
+        </p>
+    </div>
+
+    <br><div class="divider"></div><br>
+
+    <!-- ④ 页面链接区：一个 div 内含一个 div，内含两条带类名的链接 -->
+    <div class="links">
+        <div>
+            <a class="red" href="https://hongchenwusdnu.github.io/bookstore/job4.html">查看往期活动照片</a><br>
+            <a class="blue" href="https://yinwuxinli.github.io/demo02/wang-0417-work2.html">在线咨询活动详情</a>
+        </div>
+    </div>
+
+    <br><div class="divider"></div><br>
+
+    <!-- ⑤ 底部公告区：div.notice 内含三段公告，用 br 换行 -->
+    <div class="notice">
+        城市书店地址：文化路 27 号“外文角”三层，地铁二号线“书城站”B 口出站后步行五分钟。<br>
+        活动时间：每周六 19:00 - 21:00（18:30 开始签到），节假日场次以门口公告为准。<br>
+        温馨提醒：请自带一本正在读的外文读本；现场提供英汉词卡与热柠檬水，散场后请把椅子轻轻归位。
+    </div>
+
+    <br>
+
+</div>
+
+</body>
+</html>
